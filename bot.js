@@ -1,22 +1,13 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-
-client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
-});
-
-client.on('message', msg => {
-  if (msg.content === 'ping') {
-    msg.reply('Pong!');
-  }
-});
-
-'
-
-
-
+const ytdl = require('ytdl-core');
+const request = require('request');
+const fs = require('fs');
+const getYoutubeID = require('get-youtube-id');
+const fetchVideoInfo = require('youtube-info');
+ 
 const yt_api_key = "AIzaSyDeoIH0u1e72AtfpwSKKOSy3IPp2UHzqi4";
-const prefix = '!';
+const prefix = '.';
 const discord_token = process.env.BOT_TOKEN;
 client.login(discord_token);
 client.on('ready', function() {
@@ -239,16 +230,4 @@ client.on('message', function(message) {
         return str.toLowerCase().indexOf('youtube.com') > -1;
     }
 });
-
-
-
-
-
-
-
-
-
-
-
-
 client.login(process.env.BOT_TOKEN);
