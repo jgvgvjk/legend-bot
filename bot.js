@@ -333,7 +333,8 @@ client.on("message", message => {
    }
    }); 
 
- client.on('message', message => {
+ 
+client.on('message', message => {
             if (true) {
           if (message.content === '-invite') {
                 message.author.send(' رابط البوت |  https://discordapp.com/api/oauth2/authorize?client_id=447382628673388544&permissions=8&scope=bot').catch(e => console.log(e.stack));
@@ -361,4 +362,6 @@ client.on("message", message => {
     })
 }
 });
+
+
 client.login(process.env.BOT_TOKEN);
