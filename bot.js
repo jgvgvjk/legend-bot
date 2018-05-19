@@ -109,7 +109,7 @@ client.on('message', function(message) {
             if (message.guild.voiceConnection) message.guild.voiceConnection.end();
         });
     }
-    else if (message.content.startsWith(prefix + 'volume')) {
+    else if (message.content.startsWith(prefix + 'vol)) {
         if (!message.member.voiceChannel) return message.reply('**عفوا ,انت غير موجود في روم صوتي**');
         // console.log(args)
         if (args > 100) return message.reply(':x: **100**');
