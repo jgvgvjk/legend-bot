@@ -321,7 +321,7 @@ client.on("message", message => {
 ══════════ஜ۩۞۩ஜ════════════ 
 الاضافة البوت: https://discordapp.com/api/oauth2/authorize?client_id=447382628673388544&permissions=8&scope=bot
 
-رابط سيرفر البورت:https://discord.gg/MTpT3Dt 
+رابط سيرفر السبورت:https://discord.gg/MTpT3Dt 
 
 ══════════ஜ۩۞۩ஜ════════════ 
  `)
