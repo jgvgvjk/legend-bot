@@ -13,6 +13,36 @@ client.login(discord_token);
 client.on('ready', function() {
     console.log(`i am ready ${client.user.username}`);
 });
+
+
+
+
+
+   client.on('message', message => {
+    if (message.content.startsWith("-bot")) {
+    message.channel.send({
+        embed: new Discord.RichEmbed()
+            .setColor('RANDOM')
+            .setTitle('Stats Bot / Info ')
+            .addField('``Uptime``', timeCon(process.uptime()), true)
+            .addField('``Ping Is``' , `${Date.now() - message.createdTimestamp}` + '``Ms``', true)
+            .addField('``RAM Usage``', `${(process.memoryUsage().rss / 1048576).toFixed()}MB`, true)
+            .addField('``Guild Count``', client.guilds.size, true)
+            .addField('``Bot In channel``' , `${client.channels.size}` , true)
+            .addField('``Users rout``' ,`${client.users.size}` , true)
+            .addField('``Name Bot Or tag``' , `${client.user.tag}` , true)
+            .addField('``Bot Id``' , `${client.user.id}` , true)
+            .setFooter('Dragon')
+    })
+}
+});
+
+
+
+
+
+
+
 /*
 ////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\
 ////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -277,24 +307,7 @@ if(message.content.split(' ')[0] == '-bc') {
 
 
 
-   client.on('message', message => {
-    if (message.content.startsWith("-bot")) {
-    message.channel.send({
-        embed: new Discord.RichEmbed()
-            .setColor('RANDOM')
-            .setTitle('Stats Bot / Info ')
-            .addField('``Uptime``', timeCon(process.uptime()), true)
-            .addField('``Ping Is``' , `${Date.now() - message.createdTimestamp}` + '``Ms``', true)
-            .addField('``RAM Usage``', `${(process.memoryUsage().rss / 1048576).toFixed()}MB`, true)
-            .addField('``Guild Count``', client.guilds.size, true)
-            .addField('``Bot In channel``' , `${client.channels.size}` , true)
-            .addField('``Users rout``' ,`${client.users.size}` , true)
-            .addField('``Name Bot Or tag``' , `${client.user.tag}` , true)
-            .addField('``Bot Id``' , `${client.user.id}` , true)
-            .setFooter('Dragon')
-    })
-}
-});
+
 
   
 
