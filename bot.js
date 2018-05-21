@@ -32,7 +32,7 @@ client.on('ready', function() {
             .addField('``Users rout``' ,`${client.users.size}` , true)
             .addField('``Name Bot Or tag``' , `${client.user.tag}` , true)
             .addField('``Bot Id``' , `${client.user.id}` , true)
-            .setFooter('Dragon')
+            .setFooter('Black Bot')
     })
 }
 });
