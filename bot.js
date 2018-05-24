@@ -7,7 +7,7 @@ const getYoutubeID = require('get-youtube-id');
 const fetchVideoInfo = require('youtube-info');
  
 const yt_api_key = "AIzaSyDeoIH0u1e72AtfpwSKKOSy3IPp2UHzqi4";
-const prefix = '-';
+const prefix = '4';
 const discord_token = process.env.BOT_TOKEN;
 client.login(discord_token);
 client.on('ready', function() {
@@ -272,7 +272,7 @@ if(message.content.split(' ')[0] == '-bc') {
   client.on('ready', function(){
         client.user.setStatus("dnd");
         var ms = 100000 ;
-        var setGame = [`-help`];
+        var setGame = [`4play البوت خاص لجماعة مافيا`];
         var i = -1;
         var j = 0;
         setInterval(function (){
@@ -293,63 +293,6 @@ if(message.content.split(' ')[0] == '-bc') {
 
 
   
-
-
-
-client.on("message", message => {
- if (message.content === "-help") {
-        message.react("✅")
-           message.react("📬")
-  const embed = new Discord.RichEmbed() 
-      .setColor("#ffff00")
-      .setDescription(`
-╭━━╮╭╮╱╱╱╱╱╱╭╮╱╭━━╮╱╱╱╭╮
-┃╭╮┃┃┃╱╱╱╱╱╱┃┃╱┃╭╮┃╱╱╭╯╰╮
-┃╰╯╰┫┃╭━━┳━━┫┃╭┫╰╯╰┳━┻╮╭╯
-┃╭━╮┃┃┃╭╮┃╭━┫╰╯┫╭━╮┃╭╮┃┃
-┃╰━╯┃╰┫╭╮┃╰━┫╭╮┫╰━╯┃╰╯┃╰╮
-╰━━━┻━┻╯╰┻━━┻╯╰┻━━━┻━━┻━╯
-
-     🎵「أوامر بوت بلاك」🎵
-    
-     -play
-     امر تشغيل الأغنية , !شغل الرابط او اسم الأعنية
-     
-     -skip
-     تغير الأغنية
-    
-     -join
-     عشان يدخل البوت الروم
-     
-     -stop
-     ايقاف الأغنية
-     
-     -pause
-     ايقاف الاغنيه موقتا
-     
-     -unpause
-     مواصلة الأغنية
-     
-     -vol
-     مستوى الصوت 100
-     
-      -bc
-     لارسال برودكاست لاعضاء السيرفر
-     
-     
-══════════ஜ۩۞۩ஜ════════════ 
-الاضافة البوت: https://discordapp.com/api/oauth2/authorize?client_id=447382628673388544&permissions=8&scope=bot
-
-رابط سيرفر السبورت:https://discord.gg/MTpT3Dt 
-
-══════════ஜ۩۞۩ஜ════════════ 
- `)
-
-   message.author.sendEmbed(embed)
-   
-   }
-   }); 
-
 
 
 
