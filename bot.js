@@ -272,7 +272,7 @@ if(message.content.split(' ')[0] == '-bc') {
   client.on('ready', function(){
         client.user.setStatus("dnd");
         var ms = 100000 ;
-        var setGame = [`4play البوت خاص لجماعة مافيا`];
+        var setGame = [`4play البوت خاص لكلان رعب`];
         var i = -1;
         var j = 0;
         setInterval(function (){
