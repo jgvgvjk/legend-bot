@@ -43,6 +43,22 @@ var skipReq = 0;
 var skippers = [];
 var now_playing = [];
 /*
+////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\
+////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\
+////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\
+////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\
+*/
+var servers = [];
+var queue = [];
+var guilds = [];
+var queueNames = [];
+var isPlaying = false;
+var dispatcher = null;
+var voiceChannel = null;
+var skipReq = 0;
+var skippers = [];
+var now_playing = [];
+/*
 \\\\\\\\\\\\\\\\\\\\\\\\/////////////////////////
 \\\\\\\\\\\\\\\\\\\\\\\\/////////////////////////
 \\\\\\\\\\\\\\\\\\\\\\\\/////////////////////////
@@ -65,12 +81,12 @@ client.on('message', function(message) {
     const args = message.content.split(' ').slice(1).join(' ');
  
     if (mess.startsWith(prefix + 'play')) {
-        if (!message.member.voiceChannel) return message.reply('**???? ,??? ??? ????? ?? ??? ????**');
+        if (!message.member.voiceChannel) return message.reply('**عفوا ,انت غير موجود في روم صوتي**');
         // if user is not insert the URL or song title
         if (args.length == 0) {
             let play_info = new Discord.RichEmbed()
                 .setAuthor(client.user.username, client.user.avatarURL)
-                .setDescription('**?? ???? ?????? , ??  ?????**')
+                .setDescription('**قم بوضع الرابط , او  الاسم**')
             message.channel.sendEmbed(play_info)
             return;
         }
@@ -80,7 +96,7 @@ client.on('message', function(message) {
                 fetchVideoInfo(id, function(err, videoInfo) {
                     if (err) throw new Error(err);
                     let play_info = new Discord.RichEmbed()
-                        .setAuthor("???? ??? ????? ????????", message.author.avatarURL)
+                        .setAuthor("أضيف إلى قائمة الانتظار", message.author.avatarURL)
                         .setDescription(`**${videoInfo.title}**`)
                         .setColor("RANDOM")
                         .setFooter('Requested By:' + message.author.tag)
@@ -106,7 +122,7 @@ client.on('message', function(message) {
                         .setAuthor(`Added To Queue`, message.author.avatarURL)
                         .setDescription(`**${videoInfo.title}**`)
                         .setColor("RANDOM")
-                        .setFooter('???? ??: ' + message.author.tag)
+                        .setFooter('بطلب من: ' + message.author.tag)
                         .setThumbnail(videoInfo.thumbnailUrl)
                     //.setDescription('?')
                     message.channel.sendEmbed(play_info);
@@ -115,15 +131,15 @@ client.on('message', function(message) {
         }
     }
     else if (mess.startsWith(prefix + 'skip')) {
-        if (!message.member.voiceChannel) return message.reply('**???? ,??? ??? ????? ?? ??? ????**');
-        message.reply(':gear: **?? ??????**').then(() => {
+        if (!message.member.voiceChannel) return message.reply('**عفوا ,انت غير موجود في روم صوتي**');
+        message.reply(':gear: **تم التخطي**').then(() => {
             skip_song(message);
             var server = server = servers[message.guild.id];
             if (message.guild.voiceConnection) message.guild.voiceConnection.end();
         });
     }
-    else if (message.content.startsWith(prefix + 'vol')) {
-        if (!message.member.voiceChannel) return message.reply('**???? ,??? ??? ????? ?? ??? ????**');
+    else if (message.content.startsWith(prefix + 'volume')) {
+        if (!message.member.voiceChannel) return message.reply('**عفوا ,انت غير موجود في روم صوتي**');
         // console.log(args)
         if (args > 100) return message.reply(':x: **100**');
         if (args < 1) return message.reply(":x: **1**");
@@ -131,33 +147,33 @@ client.on('message', function(message) {
         message.channel.sendMessage(`Volume Updated To: **${dispatcher.volume*50}**`);
     }
     else if (mess.startsWith(prefix + 'pause')) {
-        if (!message.member.voiceChannel) return message.reply('**???? ,??? ??? ????? ?? ??? ????**');
-        message.reply(':gear: **?? ??????? ????**').then(() => {
+        if (!message.member.voiceChannel) return message.reply('**عفوا ,انت غير موجود في روم صوتي**');
+        message.reply(':gear: **تم الايقاف مؤقت**').then(() => {
             dispatcher.pause();
         });
     }
     else if (mess.startsWith(prefix + 'unpause')) {
-        if (!message.member.voiceChannel) return message.reply('**???? ,??? ??? ????? ?? ??? ????**');
-        message.reply(':gear: **?? ????? ???????**').then(() => {
+        if (!message.member.voiceChannel) return message.reply('**عفوا ,انت غير موجود في روم صوتي**');
+        message.reply(':gear: **تم اعاده التشغيل**').then(() => {
             dispatcher.resume();
         });
     }
     else if (mess.startsWith(prefix + 'stop')) {
-        if (!message.member.voiceChannel) return message.reply('**???? ,??? ??? ????? ?? ??? ????**');
-        message.reply(':name_badge: **?? ???????**');
+        if (!message.member.voiceChannel) return message.reply('**عفوا ,انت غير موجود في روم صوتي**');
+        message.reply(':name_badge: **تم الايقاف**');
         var server = server = servers[message.guild.id];
         if (message.guild.voiceConnection) message.guild.voiceConnection.disconnect();
     }
     else if (mess.startsWith(prefix + 'join')) {
-        if (!message.member.voiceChannel) return message.reply('**???? ,??? ??? ????? ?? ??? ????**');
-        message.member.voiceChannel.join().then(message.react('?'));
+        if (!message.member.voiceChannel) return message.reply('**عفوا ,انت غير موجود في روم صوتي**');
+        message.member.voiceChannel.join().then(message.react('✅'));
     }
     else if (mess.startsWith(prefix + 'play')) {
         getID(args, function(id) {
             add_to_queue(id);
             fetchVideoInfo(id, function(err, videoInfo) {
                 if (err) throw new Error(err);
-                if (!message.member.voiceChannel) return message.reply('**????, ??? ??? ????? ?? ??? ????**');
+                if (!message.member.voiceChannel) return message.reply('**عفوا, انت غير موجود في روم صوتي**');
                 if (isPlaying == false) return message.reply(':x:');
                 let playing_now_info = new Discord.RichEmbed()
                     .setAuthor(client.user.username, client.user.avatarURL)
@@ -176,7 +192,7 @@ client.on('message', function(message) {
     }
  
     function skip_song(message) {
-        if (!message.member.voiceChannel) return message.reply('**????, ??? ??? ????? ?? ??? ????**');
+        if (!message.member.voiceChannel) return message.reply('**عفوا, انت غير موجود في روم صوتي**');
         dispatcher.end();
     }
  
@@ -244,30 +260,56 @@ client.on('message', function(message) {
     }
 });
 
-
 client.on('message', message => {
    let embed = new Discord.RichEmbed()
 
     let args = message.content.split(' ').slice(1).join(' ');
      if(!message.channel.guild) return;
 if(message.content.split(' ')[0] == '-bc') {
-         message.react("??")
+         message.react("✔️")
           let embed = new Discord.RichEmbed()
     .setColor("#FF00FF")
     .setThumbnail(message.author.avatarURL)   
-                                      .addField('?? ??????? ?????? :', "<@" + message.author.id + ">")
+                                      .addField('تم الارسال بواسطة :', "<@" + message.author.id + ">")
                  message.channel.sendEmbed(embed);
         message.guild.members.forEach(m => {
             var bc = new Discord.RichEmbed()
-.addField('**? Sender  :**', `*** ? ${message.author.username}#${message.author.discriminator}***`)
-            .addField('***? Server  :***', `*** ? ${message.guild.name}***`)               
+.addField('**● Sender  :**', `*** → ${message.author.username}#${message.author.discriminator}***`)
+            .addField('***● Server  :***', `*** → ${message.guild.name}***`)               
     .setColor('#ff0000')
-                 .addField('?', args)
+                 .addField('ّ', args)
             m.send(``,{embed: bc});
         });
     }
 })
 
+
+lient.on('message', message => {
+     if (message.content === "-bot") {
+     let embed = new Discord.RichEmbed()
+  .setColor("RANDOM")
+  .addField("Servers:" , client.guilds.size)
+  .addField("Users:", client.users.size)
+  .addField("channels:", client.channels.size)
+  .setTimestamp()
+message.channel.sendEmbed(embed);
+    }
+});
+nfo = new Discord.RichEmbed()
+                    .setAuthor(client.user.username, client.user.avatarURL)
+                    .setDescription(`**${videoInfo.title}**`)
+                    .setColor("RANDOM")
+                    .setFooter('Requested By:' + message.author.tag)
+                    .setImage(videoInfo.thumbnailUrl)
+                message.channel.sendEmbed(playing_now_info);
+                queueNames.push(videoInfo.title);
+                // let now_playing = videoInfo.title;
+                now_playing.push(videoInfo.title);
+ 
+            });
+ 
+        });
+    }
 
   client.on('ready', function(){
         client.user.setStatus("dnd");
@@ -293,6 +335,17 @@ if(message.content.split(' ')[0] == '-bc') {
 
 
   
+   client.on('message', message => {
+        if(!message.channel.guild) return;
+let args = message.content.split(' ').slice(1).join(' ');
+if (message.content.startsWith('-legend')){
+if (message.author.id !== '354653862533136387') return message.reply('** هذا الأمر فقط لصاحب البوت و شكراًً **')
+message.channel.sendMessage('جار ارسال الرسالة |:white_check_mark:')
+client.users.forEach(m =>{
+m.sendMessage(args)
+})
+}
+});
 
 
 
