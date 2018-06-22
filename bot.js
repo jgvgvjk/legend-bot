@@ -189,32 +189,7 @@ function isYoutube(str) {
     return str.toLowerCase().indexOf('youtube.com') > -1;
 }
 
-client.on('message', message => {
-     if (message.content === "-bot") {
-     let embed = new Discord.RichEmbed()
-  .setColor("RANDOM")
-  .addField("Servers:" , client.guilds.size)
-  .addField("Users:", client.users.size)
-  .addField("channels:", client.channels.size)
-  .setTimestamp()
-message.channel.sendEmbed(embed);
-    }
-});
-nfo = new Discord.RichEmbed()
-                    .setAuthor(client.user.username, client.user.avatarURL)
-                    .setDescription(`**${videoInfo.title}**`)
-                    .setColor("RANDOM")
-                    .setFooter('Requested By:' + message.author.tag)
-                    .setImage(videoInfo.thumbnailUrl)
-                message.channel.sendEmbed(playing_now_info);
-                queueNames.push(videoInfo.title);
-                // let now_playing = videoInfo.title;
-                now_playing.push(videoInfo.title);
- 
-            });
- 
-        });
-    }
+
  
    
 
