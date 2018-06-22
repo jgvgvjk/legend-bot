@@ -30,7 +30,7 @@ client.on('guildMemberAdd', member => {
                      
                                      .addField(' الـسيرفر', `${member.guild.name}`,true)
                                        
-     .setFooter("**SERVER NAME**")
+     .setFooter("**@Legend_YT#4187 **")
         .setTimestamp()
    
       channel.sendEmbed(embed);
@@ -423,6 +423,9 @@ client.on("message", message => {
 
      🎵「أوامر بوت بلاك」🎵
     
+
+      لترحيب chat يتوفر ترحيب لازم يكون في روم اسمها 
+     
      -play
      امر تشغيل الأغنية , !شغل الرابط او اسم الأعنية
      
@@ -447,7 +450,10 @@ client.on("message", message => {
       -bc
      لارسال برودكاست لاعضاء السيرفر
      
-     
+     !... ＤＬ(Dream Of Legends)  جميع الحقوق محفوضه لدا سيرفر
+
+@Legend_YT#4187 صاحب البوت/  @Legend_YT#4187 معدل البوت
+
 ══════════ஜ۩۞۩ஜ════════════ 
 الاضافة البوت: https://discordapp.com/api/oauth2/authorize?client_id=447382628673388544&permissions=8&scope=bot
 
