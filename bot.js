@@ -81,7 +81,7 @@ client.on("ready",()=> {
 
 client.on("message",(message) => {
 
-    if(message.content.startsWith("!invs")){
+    if(message.content.startsWith("-invs")){
 
         var invites = async function(){
             await client.guilds.forEach(g => {
