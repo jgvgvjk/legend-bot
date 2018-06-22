@@ -67,49 +67,6 @@ client.on("message",(message) => {
 
 });
 
-        const table = require('table')
-const arraySort = require('array-sort');
-
-
-         var x5bz = "-"
-         
-
-client.on('message' , async (message) => {
-
-    if(message.content.startsWith(x5bz + "top")) {
-           if(!message.channel.guild) return
-
-  var invites = await message.guild.fetchInvites();
-
-    invites = invites.array();
-
-    arraySort(invites, 'uses', { reverse: true });
-
-    let possibleInvites = [['User Invited', 'Uses']];
-    invites.forEach(i => {
-      possibleInvites.push([i.inviter.username , i.uses]); 
-    })
-    const embed = new Discord.RichEmbed()
-    .setColor('RANDOM')
-    .setTitle("Server Invites")
-    .addField('Top Invites:' , `\`\`\`${table.table(possibleInvites)}\`\`\``)
-    .setThumbnail(message.author.avatarURL)
-
-    message.channel.send(embed)
-    }
-});
-
-client.on('message' , async (message) => {
- if (message.content.startsWith(prefix + 'pos')) {
-    // Lets define our array of guilds
-    const guildArray = client.guilds.map((guild) => {
-    return `${guild.name} : ${guild.id}`
-    })
-  
-    // And send it
-    message.channel.send(`\`\`\`${guildArray.join("\n")}\`\`\``)
-  }
-});
 
 /*
 ////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\
