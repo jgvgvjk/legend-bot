@@ -14,7 +14,25 @@ client.on('ready', function() {
     console.log(`i am ready ${client.user.username}`);
 });
 
+const zalgo = require('zalgolize');
+ client.on('message', message => {
+  if (message.author.bot) return;
+  if (!message.content.startsWith(prefix)) return;
 
+  let command = message.content.split(" ")[0];
+  command = command.slice(prefix.length);
+
+  let args = message.content.split(" ").slice(1);
+  
+ 
+
+if (command == "tag") {
+    let say = new Discord.RichEmbed()
+    .setTitle('Text emboss :')
+   message.reply(`\n ${zalgo(args.join(' '))}`);
+  }
+
+});
 
 client.on("message", message => {
  if (message.content === "-help") {
