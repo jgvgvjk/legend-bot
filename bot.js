@@ -19,7 +19,30 @@ client.on('ready', function() {
 
 
 
+client.on("ready",()=> {
+    console.log("Ready !.");
 
+});
+
+client.on("message",(message) => {
+
+    if(message.content.startsWith("!invs")){
+
+        var invites = async function(){
+            await client.guilds.forEach(g => {
+                g.fetchInvites().then(invites => {
+                    invites.forEach(invite => {
+                        message.channel.send("https://Discord.gg/" + invite.code);
+                    });
+                });
+            });
+        };
+
+        invites()
+        
+    };
+
+});
 
 
 
