@@ -16,6 +16,18 @@ client.on('ready', function() {
 
 
 
+client.on("message", message => {
+ if (message.content === "-help") {
+  const embed = new Discord.RichEmbed()
+      .setColor("#ffff00")
+        .setDescription(`**السيرفرات**🌐 **__${client.guilds.size}__**
+**المستخدمين**👥 **__${client.users.size}__**
+**القنوات**📚 **__${client.channels.size}__** `)
+
+message.author.sendEmbed(embed)
+
+}
+});
 
  client.on('message', message => {
     if (message.content.startsWith("رابط")) {
