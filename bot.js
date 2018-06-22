@@ -15,7 +15,7 @@ client.on('ready', function() {
 });
 
 
-onst ytdl = require('ytdl-core');
+const ytdl = require('ytdl-core');
 const request = require('request');
 const getYoutubeID = require('get-youtube-id');
 const fetchVideoInfo = require('youtube-info');
@@ -188,8 +188,6 @@ function search_video(query, cb) {
 function isYoutube(str) {
     return str.toLowerCase().indexOf('youtube.com') > -1;
 }
-
-
  
    
 
