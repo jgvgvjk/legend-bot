@@ -16,7 +16,33 @@ client.on('ready', function() {
 
 
 client.on("message", message => {
- if (message.content === "-help") {
+ if (message.content === "-help e") {
+  const embed = new Discord.RichEmbed()
+      .setColor("#ffff00")
+        .setDescription(`**Servers**🌐 **__${client.guilds.size}__**
+**Users**👥 **__${client.users.size}__**
+**Channels**📚 **__${client.channels.size}__** `)
+
+message.author.sendEmbed(embed)
+
+}
+});
+
+client.on("message", message => {
+ if (message.content === "-bot") {
+  const embed = new Discord.RichEmbed()
+      .setColor("#ffff00")
+        .setDescription(`**السيرفرات**🌐 **__${client.guilds.size}__**
+**المستخدمين**👥 **__${client.users.size}__**
+**القنوات**📚 **__${client.channels.size}__** `)
+
+message.author.sendEmbed(embed)
+
+}
+});
+
+client.on("message", message => {
+ if (message.content === "-help a") {
   const embed = new Discord.RichEmbed()
       .setColor("#ffff00")
         .setDescription(`**السيرفرات**🌐 **__${client.guilds.size}__**
