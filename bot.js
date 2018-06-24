@@ -456,6 +456,9 @@ client.on("message", message => {
 
 رابط سيرفر السبورت:https://discord.gg/MTpT3Dt 
 
+موقع البوت الرسمي : http://blak-bot.site123.me/
+
+
 ══════════ஜ۩۞۩ஜ════════════ 
  `)
 
@@ -520,9 +523,11 @@ client.on("message", message => {
   @ legend_YT # 4187 The owner of the bot / @ Legend_YT # 4187 The rate of the bot
 
 ══════════ஜ۩۞۩ஜ════════════ 
-اTo add the bot: https://discordapp.com/api/oauth2/authorize?client_id=447382628673388544&permissions=8&scope=bot
+To add the bot: https://discordapp.com/api/oauth2/authorize?client_id=447382628673388544&permissions=8&scope=bot
 
 Link Server Help:https://discord.gg/MTpT3Dt 
+
+the Official Website for black bot :http://blak-bot.site123.me/
 
 ══════════ஜ۩۞۩ஜ════════════ 
  `)
