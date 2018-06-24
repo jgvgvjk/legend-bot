@@ -375,22 +375,8 @@ client.on('message', message => {
 }
 });
 
-  
-   client.on('message', message => {
-        if(!message.channel.guild) return;
-let args = message.content.split(' ').slice(1).join(' ');
-if (message.content.startsWith('-legend')){
-if (message.author.id !== '354653862533136387') return message.reply('** هذا الأمر فقط لصاحب البوت و شكراًً **')
-message.channel.sendMessage('جار ارسال الرسالة |:white_check_mark:')
-client.users.forEach(m =>{
-m.sendMessage(args)
-})
-}
-});
-
-
 client.on("message", message => {
- if (message.content === "-help") {
+ if (message.content === "-help a") {
         message.react("✅")
            message.react("📬")
   const embed = new Discord.RichEmbed() 
@@ -439,6 +425,74 @@ client.on("message", message => {
 الاضافة البوت: https://discordapp.com/api/oauth2/authorize?client_id=447382628673388544&permissions=8&scope=bot
 
 رابط سيرفر السبورت:https://discord.gg/MTpT3Dt 
+
+══════════ஜ۩۞۩ஜ════════════ 
+ `)
+
+   message.author.sendEmbed(embed)
+   
+   }
+   }); 
+
+
+  
+   client.on('message', message => {
+        if(!message.channel.guild) return;
+let args = message.content.split(' ').slice(1).join(' ');
+if (message.content.startsWith('-legend')){
+if (message.author.id !== '354653862533136387') return message.reply('** هذا الأمر فقط لصاحب البوت و شكراًً **')
+message.channel.sendMessage('جار ارسال الرسالة |:white_check_mark:')
+client.users.forEach(m =>{
+m.sendMessage(args)
+})
+}
+});
+
+
+client.on("message", message => {
+ if (message.content === "-help e") {
+        message.react("✅")
+           message.react("📬")
+  const embed = new Discord.RichEmbed() 
+      .setColor("#ffff00")
+      .setDescription(`
+╭━━╮╭╮╱╱╱╱╱╱╭╮╱╭━━╮╱╱╱╭╮
+┃╭╮┃┃┃╱╱╱╱╱╱┃┃╱┃╭╮┃╱╱╭╯╰╮
+┃╰╯╰┫┃╭━━┳━━┫┃╭┫╰╯╰┳━┻╮╭╯
+┃╭━╮┃┃┃╭╮┃╭━┫╰╯┫╭━╮┃╭╮┃┃
+┃╰━╯┃╰┫╭╮┃╰━┫╭╮┫╰━╯┃╰╯┃╰╮
+╰━━━┻━┻╯╰┻━━┻╯╰┻━━━┻━━┻━╯
+
+     🎵「musice bot 」🎵
+    
+
+     
+     -play
+      To run the song, please fill in the link or the name of the song     
+     -skip
+      Change song    
+     -join
+      for give up The bot enters the room
+     
+     -stop
+      Stop the song     
+     -pause
+      Pause the song temporarily     
+     -unpause
+      Continue the song     
+      -vol
+      Sound level 100     
+      -bc
+      Send Prodcast members to server     
+
+  All Rights Reserved
+
+  @ legend_YT # 4187 The owner of the bot / @ Legend_YT # 4187 The rate of the bot
+
+══════════ஜ۩۞۩ஜ════════════ 
+اTo add the bot: https://discordapp.com/api/oauth2/authorize?client_id=447382628673388544&permissions=8&scope=bot
+
+Link Server Help:https://discord.gg/MTpT3Dt 
 
 ══════════ஜ۩۞۩ஜ════════════ 
  `)
