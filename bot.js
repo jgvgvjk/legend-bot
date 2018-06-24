@@ -41,10 +41,6 @@ message.author.sendEmbed(embed)
 }
 });
 
-bot.on('serverNewMember',function (user, userID, channelID, message, evt){
-if(user === bot.servers.get('id',"SERVERID"))
-bot.sendMessage(channelID.get('name','welcome'),"Welcome to my Server "+user.mention()+"!")
-})
 
 client.on("message", message => {
  if (message.content === "-help a") {
@@ -58,6 +54,12 @@ message.author.sendEmbed(embed)
 
 }
 });
+
+bot.on('serverNewMember',function (user, userID, channelID, message, evt){
+if(user === bot.servers.get('id',"SERVERID"))
+bot.sendMessage(channelID.get('name','welcome'),"Welcome to my Server "+user.mention()+"!")
+})
+
 
  client.on('message', message => {
     if (message.content.startsWith("رابط")) {
