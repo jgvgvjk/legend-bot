@@ -337,8 +337,12 @@ if(message.content.split(' ')[0] == '-bc') {
     }
 })
 
-
-
+client.on('message', message => {
+    if(message.content === '-help'){
+        message.channel.send('For viewing in English -help e
+                            -help a للعرض بلعربي')
+    }
+});
 
   client.on('ready', function(){
         client.user.setStatus("dnd");
