@@ -51,9 +51,8 @@ BT.editChannel("460778240722862081", {name : "🌹WELCOM"})
 BT.editChannel("460778240722862081", {name : "🌹WELCOME"})
 BT.editChannel("460778240722862081", {name : "🌹WELCOME T"})
 BT.editChannel("460778240722862081", {name : "🌹WELCOME TO"})
-BT.editChannel("460778240722862081", {name : "🌹WELCOME TO D"})
-BT.editChannel("460778240722862081", {name : "🌹WELCOME TO DR"})
-BT.editChannel("460778240722862081", {name : "🌹WELCOME TO DRK🌹"})
+BT.editChannel("460778240722862081", {name : "🌹WELCOME TO M"})
+BT.editChannel("460778240722862081", {name : "🌹WELCOME TO MR🌹"})
 
 
 
