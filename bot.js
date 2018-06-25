@@ -55,6 +55,12 @@ BT.editChannel("460778240722862081", {name : "🌹WELCOME TO D"})
 BT.editChannel("460778240722862081", {name : "🌹WELCOME TO DR"})
 BT.editChannel("460778240722862081", {name : "🌹WELCOME TO DRK🌹"})
 
+
+
+}, 5000);
+
+});
+
  
 client.on("message", message => {
  if (message.content === "-help e") {
