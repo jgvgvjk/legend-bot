@@ -15,6 +15,47 @@ client.on('ready', function() {
 });
 
 
+var Eris = require("eris");
+let  ID = "460778240722862081";
+const BT  = new Eris(process.env.BOT_TOKEN);
+BT.connect(process.env.BOT_TOKEN)
+BT.on("ready", ready => {
+setInterval(function(){
+
+            let currentTime = new Date(),
+            hours = currentTime.getHours() + 2 ,
+            minutes = currentTime.getMinutes(),
+            seconds = currentTime.getSeconds(),
+            years = currentTime.getFullYear(),
+            month = currentTime.getMonth() + 1,
+            day = currentTime.getDate(),
+            week = currentTime.getDay();
+
+
+
+            if (minutes < 10) {
+                minutes = "0" + minutes;
+            }
+            var suffix = "AM";
+            if (hours >= 12) {
+                suffix = "PM";
+                hours = hours - 12;
+            }
+            if (hours == 0) {
+                hours = 12;
+            }
+BT.editChannel("460778240722862081", {name : "🌹WEL"})
+BT.editChannel("460778240722862081", {name : "🌹WELC"})
+BT.editChannel("460778240722862081", {name : "🌹WELCO"})
+BT.editChannel("460778240722862081", {name : "🌹WELCOM"})
+BT.editChannel("460778240722862081", {name : "🌹WELCOME"})
+BT.editChannel("460778240722862081", {name : "🌹WELCOME T"})
+BT.editChannel("460778240722862081", {name : "🌹WELCOME TO"})
+BT.editChannel("460778240722862081", {name : "🌹WELCOME TO D"})
+BT.editChannel("460778240722862081", {name : "🌹WELCOME TO DR"})
+BT.editChannel("460778240722862081", {name : "🌹WELCOME TO DRK🌹"})
+
+ 
 client.on("message", message => {
  if (message.content === "-help e") {
   const embed = new Discord.RichEmbed()
