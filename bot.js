@@ -15,10 +15,6 @@ client.on('ready', function() {
 });
 
 
-
- 
-
-
 client.on("message", message => {
  if (message.content === "-help e") {
   const embed = new Discord.RichEmbed()
@@ -59,8 +55,6 @@ message.author.sendEmbed(embed)
 
 }
 });
-
-
 
 
  client.on('message', message => {
@@ -398,8 +392,6 @@ client.on('message', message => {
    });
 
 
-
-
 client.on("message", message => {
  if (message.content === "-help a") {
         message.react("✅")
@@ -476,7 +468,6 @@ m.sendMessage(args)
 }
 });
 
-
 client.on("message", message => {
  if (message.content === "-help e") {
         message.react("✅")
@@ -493,7 +484,6 @@ client.on("message", message => {
 
      🎵「musice bot 」🎵
     
-
      
      -play
       To run the song, please fill in the link or the name of the song     
