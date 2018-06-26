@@ -17,6 +17,8 @@ client.on('ready', function() {
 
 
  
+
+
 client.on("message", message => {
  if (message.content === "-help e") {
   const embed = new Discord.RichEmbed()
