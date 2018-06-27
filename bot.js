@@ -142,7 +142,7 @@ client.on("message",(message) => {
 
 
       client.on('guildMemberAdd', member => {
-      const welcomer = member.guild.channels.find('name', 'welcome');
+      const welcomer = member.guild.channels.find('name', 'chat');
       if(!welcomer) return;
          moment.locale('ar-ly');
          var h = member.user;
