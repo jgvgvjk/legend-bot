@@ -68,12 +68,6 @@ message.author.sendEmbed(embed)
 
      
      
-     
-     
-     
-     
-     
-     
       client.on('guildMemberAdd', member => {
       const welcomer = member.guild.channels.find('name', 'welcome');
       if(!welcomer) return;
@@ -143,6 +137,7 @@ message.author.sendEmbed(embed)
       })
       })
       });
+
 
 
 client.on("message", message => {
@@ -216,7 +211,7 @@ client.on("guildCreate", guild => {
     .addField(' ***Bot joined to :***[' + `${guild.name}` + ']   **By : **' + `${guild.owner.user.username}` + '')
     .setFooter('The bot is happy')
     .setTimestamp()
-    client.channels.get("اي دي الروم").send(embed)
+    client.channels.get("461480783681421312").send(embed)
   });
 
   client.on("guildDelete", guild => {
@@ -572,11 +567,13 @@ client.on("message", message => {
       -bc
      لارسال برودكاست لاعضاء السيرفر
      
-       -inv
-        لاضافة البوت 
-  
-        
-       جميع الحقوق محفوضه 
+      -inv
+       لاضافة البوت 
+      -moveall
+        لسحب كل الاعضاء لرومك
+
+
+جميع الحقوق محفوضه                     
 
 @Legend_YT#4187 صاحب البوت/  @Legend_YT#4187 معدل البوت
 
@@ -648,7 +645,8 @@ client.on("message", message => {
       Send Prodcast members to server     
       -inv
        To add the bot
-     
+     -moveall
+      To pull all members on your Room
 
        All Rights Reserved
 
