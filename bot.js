@@ -529,6 +529,7 @@ client.on('message', message => {
 });
 
 
+
 client.on("message", message => {
  if (message.content === "-help a") {
         message.react("✅")
@@ -608,6 +609,7 @@ m.sendMessage(args)
 })
 }
 });
+
 
 client.on("message", message => {
  if (message.content === "-help e") {
