@@ -546,7 +546,7 @@ client.on("message", message => {
      
       -inv
        لاضافة البوت 
-      -moveall
+      -move all
         لسحب كل الاعضاء لرومك
 
 
@@ -622,7 +622,7 @@ client.on("message", message => {
       Send Prodcast members to server     
       -inv
        To add the bot
-     -moveall
+     -move all
       To pull all members on your Room
 
        All Rights Reserved
