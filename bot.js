@@ -14,6 +14,29 @@ client.on('ready', function() {
     console.log(`i am ready ${client.user.username}`);
 });
 
+
+const superagent = require("superagent");
+
+client.on('message', async message => {
+  if (message.content.startsWith(prefix + 'عناق')) {
+       let args = message.content.split(" ").slice(1);
+    let hugUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+    if(!hugUser) return message.channel.send("Make sure you mention someone!");
+    const {body} = await superagent
+    .get(`https://nekos.life/api/v2/img/hug`);
+    let hugEmbed = new Discord.RichEmbed()
+    .setTitle("Hug! c:")
+    .setDescription(`**${message.author.username}** hugged **${message.mentions.users.first().username}**!`)
+    .setImage(body.url)
+    .setColor("RANDOM")
+    .setFooter("Bot Version: 0.0.4", client.user.displayAvatarURL);
+
+    message.channel.send(hugEmbed)
+
+}
+});
+
+
 client.on('message', message => {
 if(message.content.startsWith(prefix + "invite")) { 
 message.author.send(` https://discordapp.com/oauth2/authorize?client_id=461155786492608513&permissions=8&scope=bot`);
