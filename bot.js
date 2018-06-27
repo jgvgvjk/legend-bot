@@ -14,6 +14,12 @@ client.on('ready', function() {
     console.log(`i am ready ${client.user.username}`);
 });
 
+client.on('message', message => {
+if(message.content.startsWith(prefix + "invite")) { 
+message.author.send(` https://discordapp.com/oauth2/authorize?client_id=461155786492608513&permissions=8&scope=bot`);
+}
+});
+
 
 client.on('message', message => {
     if (message.content.startsWith("#hack")) {
