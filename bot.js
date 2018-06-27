@@ -65,10 +65,7 @@ message.author.sendEmbed(embed)
 });
 
 
-var Canvas = require('canvas')
-var jimp = require('jimp')
-const fs = require('fs');
-const moment = require('moment');
+
      
      
      
