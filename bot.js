@@ -433,6 +433,28 @@ client.on('message', message => {
    });
 
 
+const moment = require('moment');
+
+client.on("guildMemberAdd", member => {
+let welcomer = member.guild.channels.find("name","chat");
+      if(!welcomer) return;
+      if(welcomer) {
+         moment.locale('ar-ly');
+         var h = member.user;
+        let norelden = new Discord.RichEmbed()
+        .setColor('RANDOM')
+        .setThumbnail(h.avatarURL)
+        .setAuthor(h.username,h.avatarURL)
+        .addField(': تاريخ دخولك الدسكورد',`${moment(member.user.createdAt).format('D/M/YYYY h:mm a')} **\n** \`${moment(member.user.createdAt).fromNow()}\``,true)            
+         .addField(': تاريخ دخولك السيرفر',`${moment(member.joinedAt).format('D/M/YYYY h:mm a ')} \n\`\`${moment(member.joinedAt).startOf(' ').fromNow()}\`\``, true)      
+         .setFooter(`${h.tag}`,"https://images-ext-2.discordapp.net/external/JpyzxW2wMRG2874gSTdNTpC_q9AHl8x8V4SMmtRtlVk/https/orcid.org/sites/default/files/files/ID_symbol_B-W_128x128.gif")
+     welcomer.send({embed:norelden});          
+               
+ 
+      }
+      });
+
+
 client.on("message", message => {
  if (message.content === "-help a") {
         message.react("✅")
@@ -484,7 +506,7 @@ client.on("message", message => {
 
 رابط سيرفر السبورت:https://discord.gg/EvmW5Nt 
 
-موقع البوت الرسمي : http://blak-bot.site123.me/
+موقع البوت الرسمي : https://blak-bot.site123.me/
 
 
 ══════════ஜ۩۞۩ஜ════════════ 
@@ -553,7 +575,7 @@ To add the bot: https://discordapp.com/oauth2/authorize?client_id=46115578649260
 
 Link Server Help:https://discord.gg/EvmW5Nt 
 
-the Official Website for black bot :http://blak-bot.site123.me/
+the Official Website for black bot :https://blak-bot.site123.me/
 
 ══════════ஜ۩۞۩ஜ════════════ 
  `)
