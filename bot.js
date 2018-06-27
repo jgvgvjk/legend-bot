@@ -439,9 +439,9 @@ client.on("message", message => {
 @Legend_YT#4187 صاحب البوت/  @Legend_YT#4187 معدل البوت
 
 ══════════ஜ۩۞۩ஜ════════════ 
-الاضافة البوت: https://discordapp.com/api/oauth2/authorize?client_id=447382628673388544&permissions=8&scope=bot
+الاضافة البوت: https://discordapp.com/oauth2/authorize?client_id=461155786492608513&permissions=8&scope=bot
 
-رابط سيرفر السبورت:https://discord.gg/MTpT3Dt 
+رابط سيرفر السبورت:https://discord.gg/EvmW5Nt 
 
 موقع البوت الرسمي : http://blak-bot.site123.me/
 
@@ -460,7 +460,7 @@ client.on("message", message => {
         if(!message.channel.guild) return;
 let args = message.content.split(' ').slice(1).join(' ');
 if (message.content.startsWith('-legend')){
-if (message.author.id !== '354653862533136387') return message.reply('** هذا الأمر فقط لصاحب البوت و شكراًً **')
+if (message.author.id !== '396958215377780747') return message.reply('** هذا الأمر فقط لصاحب البوت و شكراًً **')
 message.channel.sendMessage('جار ارسال الرسالة |:white_check_mark:')
 client.users.forEach(m =>{
 m.sendMessage(args)
@@ -508,9 +508,9 @@ client.on("message", message => {
   @ legend_YT # 4187 The owner of the bot / @ Legend_YT # 4187 The rate of the bot
 
 ══════════ஜ۩۞۩ஜ════════════ 
-To add the bot: https://discordapp.com/api/oauth2/authorize?client_id=447382628673388544&permissions=8&scope=bot
+To add the bot: https://discordapp.com/oauth2/authorize?client_id=461155786492608513&permissions=8&scope=bot
 
-Link Server Help:https://discord.gg/MTpT3Dt 
+Link Server Help:https://discord.gg/EvmW5Nt 
 
 the Official Website for black bot :http://blak-bot.site123.me/
 
