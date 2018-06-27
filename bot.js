@@ -514,7 +514,19 @@ client.on('message', message => {
 
 
 
-
+client.on('message', message => {
+                if(message.content === '-' + "inv") {
+                    let embed = new Discord.RichEmbed ()
+                    embed.setTitle("**:arrow_right:Click here to Invite Black-Bot!**")
+                     .setThumbnail(message.author.avatarURL)
+      .setFooter(message.author.username, message.author.avatarURL) 
+                    .setDescription(`thanks for adding me to your server **${message.author.username}**`)
+                    
+                .setURL(`https://discordapp.com/oauth2/authorize?client_id=461155786492608513&permissions=8&scope=bot`);
+                
+                   message.channel.sendEmbed(embed);
+                  }
+});
 
 
 client.on("message", message => {
@@ -533,7 +545,7 @@ client.on("message", message => {
 
      🎵「أوامر بوت بلاك」🎵
     
-
+يوجد لدينا ترحيب بس لازم روم اسمه welcome
      
      -play
      امر تشغيل الأغنية , !شغل الرابط او اسم الأعنية
@@ -559,6 +571,10 @@ client.on("message", message => {
       -bc
      لارسال برودكاست لاعضاء السيرفر
      
+       -inv
+        لاضافة البوت 
+  
+        
        جميع الحقوق محفوضه 
 
 @Legend_YT#4187 صاحب البوت/  @Legend_YT#4187 معدل البوت
@@ -609,8 +625,9 @@ client.on("message", message => {
 
      🎵「musice bot 」🎵
     
+     We have a welcome but need a room named welcome
      
-     -play
+      -play
       To run the song, please fill in the link or the name of the song     
      -skip
       Change song    
@@ -627,8 +644,11 @@ client.on("message", message => {
       Sound level 100     
       -bc
       Send Prodcast members to server     
+      -inv
+       To add the bot
+     
 
-  All Rights Reserved
+       All Rights Reserved
 
   @ legend_YT # 4187 The owner of the bot / @ Legend_YT # 4187 The rate of the bot
 
