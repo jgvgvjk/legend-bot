@@ -15,17 +15,16 @@ client.on('ready', function() {
 });
 
 
- client.on('message', message => {
-   if (message.content.startsWith("-عقاب")) {
-                if(!message.channel.guild) return message.reply('** This command only for servers**');
-  var embed = new Discord.RichEmbed()
-  .setColor('RANDOM')
-   .setThumbnail(message.author.avatarURL) 
- .addField('WOlF BOT' ,
-  `${Za7f[Math.floor(Math.random() * Za7f.length)]}`)
-  message.channel.sendEmbed(embed);
-  console.log('[38ab] Send By: ' + message.author.username)
-    }
+client.on('guildMemberRemove', member => {
+    var embed = new Discord.RichEmbed()
+    .setAuthor(member.user.username, member.user.avatarURL)
+    .setThumbnail(member.user.avatarURL)
+    .setTitle('💔 معسلامه ')
+    .setDescription(member.user.tag)
+    .setColor('RED')
+var channel =member.guild.channels.find('name', 'chat')
+if (!channel) return;
+channel.send({embed : embed});
 });
 
 
