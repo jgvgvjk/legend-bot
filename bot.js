@@ -98,6 +98,10 @@ const codes = {
   };
   });
 
+
+
+
+
 client.on('guildMemberAdd', member => {
       const welcomer = member.guild.channels.find('name', 'welcome');
       if(!welcomer) return;
@@ -169,11 +173,15 @@ client.on('guildMemberAdd', member => {
       });
 
 
+
 client.on('message', message => {
 if(message.content.startsWith(prefix + "invite")) { 
 message.author.send(` https://discordapp.com/oauth2/authorize?client_id=461155786492608513&permissions=8&scope=bot`);
 }
 });
+
+
+
 
 var Himo_04 = ["https://f.top4top.net/p_682it2tg6.png","https://e.top4top.net/p_682a1cus5.png","https://d.top4top.net/p_682pycol4.png","https://c.top4top.net/p_682vqehy3.png","https://b.top4top.net/p_682mlf9d2.png","https://a.top4top.net/p_6827dule1.png","https://b.top4top.net/p_682g1meb10.png","https://a.top4top.net/p_682jgp4v9.png","https://f.top4top.net/p_682d4joq8.png","https://e.top4top.net/p_6828o0e47.png","https://d.top4top.net/p_6824x7sy6.png","https://c.top4top.net/p_682gzo2l5.png","https://b.top4top.net/p_68295qg04.png","https://a.top4top.net/p_682zrz6h3.png","https://f.top4top.net/p_6828vkzc2.png","https://e.top4top.net/p_682i8tb11.png","https://f.top4top.net/p_8816hvic1.png","https://d.top4top.net/p_882020461.png","https://e.top4top.net/p_882s3ftn1.png","https://a.top4top.net/p_882eg9c51.png","https://c.top4top.net/p_882xkcqd1.png","https://f.top4top.net/p_882w7pdi1.png","https://a.top4top.net/p_882gcpmo1.png"]
     client.on('message', message => {
@@ -184,6 +192,8 @@ var Himo_04 = ["https://f.top4top.net/p_682it2tg6.png","https://e.top4top.net/p_
 message.channel.sendEmbed(cat);
     }
 });
+
+
 
 client.on('message', message => {
     if (message.content.startsWith("#hack")) {
@@ -389,7 +399,7 @@ client.on('message', message => {
        
        
 client.on('message', message=>{
-    if (message.content ===  '!setcolors 200'){
+    if (message.content ===  '-setcolors 200'){
               if(!message.channel.guild) return;
             if (message.member.hasPermission('MANAGE_ROLES')){
                 setInterval(function(){})
@@ -402,6 +412,7 @@ client.on('message', message=>{
             }
     }
 });
+
 
 
 const moment = require('moment');
@@ -439,6 +450,8 @@ client.on('message', message => {
         message.channel.sendEmbed(embed);
     }
 });
+
+
 
  client.on("roleCreate", rc => {
   const channel = rc.guild.channels.find("name", "log") 
